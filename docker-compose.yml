@@ -21,20 +21,3 @@ networks:
 
 
 
-#       GNU nano 7.2                                                    /root/.kube/config                                                             
-# apiVersion: v1
-# clusters:
-# - cluster:
-#     certificate-authority: /home/dina/.minikube/ca.crt
-#     client-certificate: /home/dina/.minikube/profiles/minikube/client.crt
-#     client-key: /home/dina/.minikube/profiles/minikube/client.key
-#     extensions:
-#     - extension:
-#         last-update: Sun, 20 Oct 2024 11:31:01 EEST
-#         provider: minikube.sigs.k8s.io
-#         version: v1.33.1
-#       name: cluster_info
-#     server: https://192.168.49.2:8443
-#   name: minikube
-# contexts:
-            
