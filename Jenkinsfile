@@ -1,22 +1,30 @@
-pipeline {
-    agent any
-    tools{
-        maven 'maven_3_5_0'
+pipeline{
+    
+    agent any 
+    tools {
+        maven 'jenkins-maven'
     }
+    
     stages{
         stage('Build Maven'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DinaOkasha/devops_automation.git']]])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DinaOkasha/devops_automation.git']])
+                
                 sh 'mvn clean install'
+                
             }
         }
-        stage('Build docker image'){
+        
+        stage('Build Docker image'){
             steps{
+                
                 script{
                     sh 'docker build -t drdinaokasha/devops_automation .'
                 }
+                
+                
             }
-        }
+        } 
         
        stage('Push Docker image'){
             steps{
@@ -30,17 +38,20 @@ pipeline {
                     }
                 }
                 
-                
-            }
-        } 
-       
-        stage('Deploy to k8s'){
-            steps{
-                script{
-                    echo "hello dina"
-                    // kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
                 }
             }
-        }
+        
+       stage('Deploy using k8s'){
+            steps{
+                
+                script{
+                    kubernetesDeploy (configs: 'deploymentservice.yaml', kubeconfigId: 'k8s_deploy')
+                    
+                      }
+           
+                }
+                    
+                    
+           }
     }
 }
